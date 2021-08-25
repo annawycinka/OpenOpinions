@@ -9,6 +9,10 @@ namespace OpenOpinions.Data
 
         public Opinion GetOpinionById(int id);
 
+        public void CreateOpinion(Opinion newOpinion);
+
+        public bool SaveChanges();
+
 
     }
 }

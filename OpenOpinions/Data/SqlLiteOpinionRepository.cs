@@ -14,6 +14,16 @@ namespace OpenOpinions.Data
         {
             this._context = context;
         }
+
+        public void CreateOpinion(Opinion newOpinion)
+        {
+            if (newOpinion == null)
+            {
+                throw new ArgumentNullException(nameof(newOpinion));
+            }
+            _context.Opinions.Add(newOpinion);
+        }
+
         public IEnumerable<Opinion> GetAllOpinions()
         {
            return _context.Opinions.ToList();
@@ -22,6 +32,11 @@ namespace OpenOpinions.Data
         public Opinion GetOpinionById(int id)
         {
             return _context.Opinions.FirstOrDefault(x => x.Id == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges()>=0);
         }
     }
 }

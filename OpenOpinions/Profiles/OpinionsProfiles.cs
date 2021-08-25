@@ -13,6 +13,7 @@ namespace OpenOpinions.Profiles
         public OpinionsProfiles()
         {
             CreateMap<Opinion, ReadOpinionDto>();
+            CreateMap<CreateOpinionDto, Opinion>();
         }
     }
 }

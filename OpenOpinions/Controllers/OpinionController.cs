@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using OpenOpinions.Data;
 using OpenOpinions.Dtos;
 using OpenOpinions.Models;
+using SQLitePCL;
 
 namespace OpenOpinions.Controllers
 {
@@ -28,7 +29,7 @@ namespace OpenOpinions.Controllers
             return Ok(_mapper.Map<IEnumerable<ReadOpinionDto>>(allOpinions));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetOpinionById")]
         public ActionResult<ReadOpinionDto> GetOpinionById(int id)
         {
             var opinion = _repository.GetOpinionById(id);
@@ -38,5 +39,16 @@ namespace OpenOpinions.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
+        public ActionResult<ReadOpinionDto> CreateOpinion(CreateOpinionDto createOpinionDto)
+        {
+
+            var opinionModel = _mapper.Map<Opinion>(createOpinionDto);
+            _repository.CreateOpinion(opinionModel);
+            var opinionReadDto = _mapper.Map<ReadOpinionDto>(opinionModel);
+            _repository.SaveChanges();
+            return CreatedAtRoute(nameof(GetOpinionById), new{Id=opinionModel.Id}, opinionReadDto );
+        }
+
     } 
 }
