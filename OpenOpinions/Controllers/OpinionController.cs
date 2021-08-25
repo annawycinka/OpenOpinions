@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -23,16 +24,16 @@ namespace OpenOpinions.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReadOpinionDto>> GetAllOpinions()
+        public async Task<ActionResult<IEnumerable<ReadOpinionDto>>> GetAllOpinions()
         {
-            var allOpinions = _repository.GetAllOpinions();
+            var allOpinions = await _repository.GetAllOpinions();
             return Ok(_mapper.Map<IEnumerable<ReadOpinionDto>>(allOpinions));
         }
 
         [HttpGet("{id}", Name = "GetOpinionById")]
-        public ActionResult<ReadOpinionDto> GetOpinionById(int id)
+        public async Task<ActionResult<ReadOpinionDto>> GetOpinionById(int id)
         {
-            var opinion = _repository.GetOpinionById(id);
+            var opinion = await _repository.GetOpinionById(id);
             if (opinion != null)
             {
                 return Ok(_mapper.Map<ReadOpinionDto>(opinion));
@@ -40,24 +41,21 @@ namespace OpenOpinions.Controllers
             return NotFound();
         }
         [HttpPost]
-        public ActionResult<ReadOpinionDto> CreateOpinion(CreateOpinionDto createOpinionDto)
+        public async Task<ActionResult<ReadOpinionDto>> CreateOpinion(CreateOpinionDto createOpinionDto)
         {
-
             var opinionModel = _mapper.Map<Opinion>(createOpinionDto);
-            _repository.CreateOpinion(opinionModel);
+            await _repository.CreateOpinion(opinionModel);
             var opinionReadDto = _mapper.Map<ReadOpinionDto>(opinionModel);
-            _repository.SaveChanges();
             return CreatedAtRoute(nameof(GetOpinionById), new{Id=opinionModel.Id}, opinionReadDto );
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteOpinion(int id)
+        public async Task<ActionResult> DeleteOpinion(int id)
         {
-            var opinion = _repository.GetOpinionById(id);
+            var opinion = await _repository.GetOpinionById(id);
             if (opinion != null)
             {
-                _repository.DeleteOpinion(opinion);
-                _repository.SaveChanges();
+                await _repository.DeleteOpinion(opinion);
             }
             return NoContent();
              

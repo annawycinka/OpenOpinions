@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace OpenOpinions.Data
 {
@@ -15,16 +16,17 @@ namespace OpenOpinions.Data
             this._context = context;
         }
 
-        public void CreateOpinion(Opinion newOpinion)
+        public async Task CreateOpinion(Opinion newOpinion)
         {
             if (newOpinion == null)
             {
                 throw new ArgumentNullException(nameof(newOpinion));
             }
             _context.Opinions.Add(newOpinion);
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteOpinion(Opinion deleteOpinion)
+        public async Task DeleteOpinion(Opinion deleteOpinion)
         {
             if (deleteOpinion == null)
             {
@@ -32,21 +34,17 @@ namespace OpenOpinions.Data
             }
 
             _context.Opinions.Remove(deleteOpinion);
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Opinion> GetAllOpinions()
+        public async Task<IEnumerable<Opinion>> GetAllOpinions()
         {
-           return _context.Opinions.ToList();
+           return await _context.Opinions.ToListAsync();
         }
 
-        public Opinion GetOpinionById(int id)
+        public async Task<Opinion> GetOpinionById(int id)
         {
-            return _context.Opinions.FirstOrDefault(x => x.Id == id);
-        }
-
-        public bool SaveChanges()
-        {
-            return (_context.SaveChanges()>=0);
+            return await _context.Opinions.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
