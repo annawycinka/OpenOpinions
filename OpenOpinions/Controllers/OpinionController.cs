@@ -50,5 +50,18 @@ namespace OpenOpinions.Controllers
             return CreatedAtRoute(nameof(GetOpinionById), new{Id=opinionModel.Id}, opinionReadDto );
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult DeleteOpinion(int id)
+        {
+            var opinion = _repository.GetOpinionById(id);
+            if (opinion != null)
+            {
+                _repository.DeleteOpinion(opinion);
+                _repository.SaveChanges();
+            }
+            return NoContent();
+             
+        }
+
     } 
 }

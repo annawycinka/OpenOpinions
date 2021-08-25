@@ -24,6 +24,16 @@ namespace OpenOpinions.Data
             _context.Opinions.Add(newOpinion);
         }
 
+        public void DeleteOpinion(Opinion deleteOpinion)
+        {
+            if (deleteOpinion == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            _context.Opinions.Remove(deleteOpinion);
+        }
+
         public IEnumerable<Opinion> GetAllOpinions()
         {
            return _context.Opinions.ToList();

@@ -1,5 +1,6 @@
 ﻿using OpenOpinions.Models;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace OpenOpinions.Data
 {
@@ -12,6 +13,8 @@ namespace OpenOpinions.Data
         public void CreateOpinion(Opinion newOpinion);
 
         public bool SaveChanges();
+
+        public void DeleteOpinion(Opinion deleteOpinion);
 
 
     }
