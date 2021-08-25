@@ -28,7 +28,11 @@ namespace OpenOpinions.Controllers
         public ActionResult<Opinion> GetOpinionById(int id)
         {
             var opinion = _repository.GetOpinionById(id);
-            return Ok(opinion);
+            if (opinion != null)
+            {
+                return Ok(opinion);
+            }
+            return NotFound();
         }
     } 
 }
