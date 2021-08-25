@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenOpinions.Data;
+using OpenOpinions.Profiles;
 
 namespace OpenOpinions
 {
@@ -30,7 +31,7 @@ namespace OpenOpinions
             });
 
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(OpinionsProfiles));
             services.AddScoped<IOpinionRepository, SqlLiteOpinionRepository>();
             services.AddDbContext<OpinionContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
