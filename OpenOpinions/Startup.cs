@@ -32,7 +32,8 @@ namespace OpenOpinions
 
 
             services.AddAutoMapper(typeof(OpinionsProfiles));
-            services.AddScoped<IOpinionRepository, SqlLiteOpinionRepository>();
+            services.AddScoped<IOpinionRepository, DbLiteOpinionRepository>();
+            services.AddSingleton<DbLiteOpinionContext>();
             services.AddDbContext<OpinionContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
         }
