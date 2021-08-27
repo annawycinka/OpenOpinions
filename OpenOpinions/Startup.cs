@@ -25,17 +25,36 @@ namespace OpenOpinions
         {
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
 
             services.AddAutoMapper(typeof(OpinionsProfiles));
-            services.AddScoped<IOpinionRepository, DbLiteOpinionRepository>();
+
             services.AddSingleton<DbLiteOpinionContext>();
             services.AddDbContext<OpinionContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            string dataSource = Configuration.GetValue<string>("DataSource:Current");
+
+            if (dataSource.Equals("SQLLite"))
+            {
+
+                services.AddDbContext<OpinionContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+                services.AddScoped<IOpinionRepository, SqlLiteOpinionRepository>();
+
+            }
+            else if (dataSource.Equals("LiteDb"))
+            {
+
+                services.AddScoped<IOpinionRepository, DbLiteOpinionRepository>();
+
+            }
+            else if (dataSource.Equals("InMemory"))
+            {
+                services.AddSingleton<IOpinionRepository, InMemoryOpinionRepository>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
