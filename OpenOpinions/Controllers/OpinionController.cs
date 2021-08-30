@@ -30,7 +30,7 @@ namespace OpenOpinions.Controllers
             return Ok(_mapper.Map<IEnumerable<ReadOpinionDto>>(allOpinions));
         }
 
-        [HttpGet("{id}", Name = "GetOpinionById")]
+        [HttpGet("{id}", Name = nameof(GetOpinionById))]
         public async Task<ActionResult<ReadOpinionDto>> GetOpinionById(int id)
         {
             var opinion = await _repository.GetOpinionById(id);

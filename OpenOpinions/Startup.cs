@@ -30,15 +30,10 @@ namespace OpenOpinions
 
             services.AddAutoMapper(typeof(OpinionsProfiles));
 
-            services.AddSingleton<DbLiteOpinionContext>();
-            services.AddDbContext<OpinionContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
             string dataSource = Configuration.GetValue<string>("DataSource:Current");
 
             if (dataSource.Equals("SQLLite"))
             {
-
                 services.AddDbContext<OpinionContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -47,11 +42,10 @@ namespace OpenOpinions
             }
             else if (dataSource.Equals("LiteDb"))
             {
-
+                services.AddSingleton<DbLiteOpinionContext>();
                 services.AddScoped<IOpinionRepository, DbLiteOpinionRepository>();
-
             }
-            else if (dataSource.Equals("InMemory"))
+            else 
             {
                 services.AddSingleton<IOpinionRepository, InMemoryOpinionRepository>();
             }

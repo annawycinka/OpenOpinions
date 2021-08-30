@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,9 +16,13 @@ namespace OpenOpinions
         {
             var host = CreateHostBuilder(args).Build();
 
-            using var scope = host.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<OpinionContext>();
-            await SqlDbMigrator.Migrate(dbContext);
+            IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
+
+            if (config.GetValue<string>("DataSource:Current") == "SQLLite")
+            {
+                var dbContext = host.Services.GetRequiredService<OpinionContext>();
+                await SqlDbMigrator.Migrate(dbContext);
+            }
 
             await host.RunAsync();
         }

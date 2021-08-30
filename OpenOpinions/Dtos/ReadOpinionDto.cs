@@ -8,12 +8,8 @@ namespace OpenOpinions.Dtos
 {
     public class ReadOpinionDto
     {
-        
         public int Id { get; set; }
 
-     
         public string Text { get; set; }
-
-        
     }
 }

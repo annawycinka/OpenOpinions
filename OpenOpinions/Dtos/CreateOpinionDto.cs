@@ -8,11 +8,7 @@ namespace OpenOpinions.Dtos
 {
     public class CreateOpinionDto
     {
-        
-
         [Required]
         public string Text { get; set; }
-
-        
     }
 }

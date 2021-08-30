@@ -13,8 +13,7 @@ namespace OpenOpinions.Data
 
         public InMemoryOpinionRepository()
         {
-            List<Opinion> opinionList = new List<Opinion>();
-            this._opinionList = opinionList;
+            this._opinionList = new List<Opinion>();
         }
         public Task CreateOpinion(Opinion newOpinion)
         {
