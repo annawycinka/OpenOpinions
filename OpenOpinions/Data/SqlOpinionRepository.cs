@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OpenOpinions.Data
 {
-    public class SqlLiteOpinionRepository : IOpinionRepository
+    public class SqlOpinionRepository : IOpinionRepository
     {
         private readonly OpinionContext _context;
 
-        public SqlLiteOpinionRepository(OpinionContext context)
+        public SqlOpinionRepository(OpinionContext context)
         {
             this._context = context;
         }

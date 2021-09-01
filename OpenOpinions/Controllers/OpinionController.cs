@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace OpenOpinions.Controllers
         {
             _repository = repository;
             _mapper = mapper;
+
         }
 
         [HttpGet]
@@ -46,7 +48,7 @@ namespace OpenOpinions.Controllers
             var opinionModel = _mapper.Map<Opinion>(createOpinionDto);
             await _repository.CreateOpinion(opinionModel);
             var opinionReadDto = _mapper.Map<ReadOpinionDto>(opinionModel);
-            return CreatedAtRoute(nameof(GetOpinionById), new{Id=opinionModel.Id}, opinionReadDto );
+            return CreatedAtRoute(nameof(GetOpinionById), new { Id = opinionReadDto.Id }, opinionReadDto);
         }
 
         [HttpDelete("{id}")]
@@ -56,9 +58,9 @@ namespace OpenOpinions.Controllers
             if (opinion != null)
             {
                 await _repository.DeleteOpinion(opinion);
+                return NoContent();
             }
-            return NoContent();
-             
+            return NotFound();
         }
 
     } 
