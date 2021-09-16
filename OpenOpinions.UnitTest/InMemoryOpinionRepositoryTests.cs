@@ -68,7 +68,7 @@ namespace OpenOpinions.UnitTest
         [Fact]
         public async Task WhenGetAllOpinions_ThenAllOpinionsGiven()
         {
-            //Arrangedddddd
+            //Arrange
             var opinion1 = new Opinion
             {
                 Text = "first opinion"
