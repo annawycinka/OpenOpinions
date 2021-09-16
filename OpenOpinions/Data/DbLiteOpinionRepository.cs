@@ -54,5 +54,11 @@ namespace OpenOpinions.Data
             var result = OpinionsCollection.FindById(new BsonValue(id));
             return Task.FromResult(result);
         }
+
+        public Task Update(Opinion updateOpinion)
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 }

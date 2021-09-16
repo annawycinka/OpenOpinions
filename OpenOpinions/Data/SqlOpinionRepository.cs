@@ -46,5 +46,10 @@ namespace OpenOpinions.Data
         {
             return await _context.Opinions.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task Update(Opinion updatedOpinion)
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

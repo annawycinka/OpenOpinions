@@ -18,9 +18,11 @@ namespace OpenOpinions
 
             IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
 
+            using var scope = host.Services.CreateScope();
+
             if (config.GetValue<string>("DataSource:Current") == "SQLLite")
             {
-                var dbContext = host.Services.GetRequiredService<OpinionContext>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<OpinionContext>();
                 await SqlDbMigrator.Migrate(dbContext);
             }
 

@@ -61,7 +61,23 @@ namespace OpenOpinions.Controllers
                 return NoContent();
             }
             return NotFound();
+
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateOpinion(int id, UpdateOpinionDto updatedOpinionDto)
+        {
+            var opinionModel = await _repository.GetOpinionById(id);
+            if (opinionModel == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map( updatedOpinionDto, opinionModel);
+
+            await _repository.Update(opinionModel);
+
+            return NoContent();
+        }
     } 
 }

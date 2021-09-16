@@ -10,11 +10,13 @@ namespace OpenOpinions.Data
     public class InMemoryOpinionRepository : IOpinionRepository
     {
         private readonly List<Opinion> _opinionList;
+        
 
         public InMemoryOpinionRepository()
         {
             this._opinionList = new List<Opinion>();
         }
+        
         public Task CreateOpinion(Opinion newOpinion)
         {
             int nextId;
@@ -52,6 +54,11 @@ namespace OpenOpinions.Data
         {
             var opinion = _opinionList.FirstOrDefault(x => x.Id == id);
             return Task.FromResult(opinion);
+        }
+
+        public Task Update(Opinion updateOpinion)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,5 +14,7 @@ namespace OpenOpinions.Data
         public Task CreateOpinion(Opinion newOpinion);
 
         public Task DeleteOpinion(Opinion deleteOpinion);
+
+        public Task Update(Opinion updateOpinion);
     }
 }

@@ -14,6 +14,7 @@ namespace OpenOpinions.Profiles
         {
             CreateMap<Opinion, ReadOpinionDto>();
             CreateMap<CreateOpinionDto, Opinion>();
+            CreateMap<UpdateOpinionDto,Opinion >();
         }
     }
 }
